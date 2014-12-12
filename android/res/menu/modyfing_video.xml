@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.rafalzawadzki.rzengineer.video.ModyfingVideoActivity">
+    <item
+        android:id="@+id/action_restart_video"
+        android:title="Start/Reset"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_replay"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/action_play_pause_video"
+        android:title="Pauza/Wznow"
+        android:icon="@drawable/ic_action_pause_over_video"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
+
+</menu>

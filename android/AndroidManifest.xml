@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.elektryczny.rzengineer.android" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".sound.SoundCaptureActivity"
+            android:label="@string/title_activity_sound_capture"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".messages.MessagesCryptoActivity"
+            android:label="@string/title_activity_messages_crypto"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".messages.ConversationActivity"
+            android:label="@string/title_activity_conversation"
+            android:parentActivityName=".messages.MessagesCryptoActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.messages.MessagesCryptoActivity" />
+        </activity>
+        <activity
+            android:name=".messages.MessageDetailsActivity"
+            android:label="@string/title_activity_message_details"
+            android:parentActivityName=".messages.ConversationActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.messages.ConversationActivity" />
+        </activity>
+        <activity
+            android:name=".video.VideoActivity"
+            android:label="@string/title_activity_video"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".video.PlayVideoActivity"
+            android:label="@string/title_activity_play_video"
+            android:parentActivityName=".video.VideoActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.video.VideoActivity" />
+        </activity>
+        <activity
+            android:name=".video.ModyfingVideoActivity"
+            android:label="@string/title_activity_modyfing_video"
+            android:parentActivityName=".video.VideoActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.video.VideoActivity" />
+        </activity>
+        <activity
+            android:name=".picture.PictureActivity"
+            android:label="@string/title_activity_picture"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".picture.ShowPictureActivity"
+            android:label="@string/title_activity_show_picture"
+            android:parentActivityName=".picture.PictureActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.picture.PictureActivity" />
+        </activity>
+        <activity
+            android:name=".picture.ModyfingPictureActivity"
+            android:label="@string/title_activity_modyfing_picture"
+            android:parentActivityName=".picture.PictureActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.picture.PictureActivity" />
+        </activity>
+        <activity
+            android:name=".multimediasolid.MultimediaSolidActivity"
+            android:label="@string/title_activity_multimedia_solid"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+    </application>
+
+</manifest>
