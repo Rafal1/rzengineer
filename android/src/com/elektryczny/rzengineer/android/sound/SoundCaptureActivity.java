@@ -22,6 +22,10 @@ public class SoundCaptureActivity extends Activity {
     private static final String LOG_TAG = "AudioRecord";
     private static final Integer RECORDING_TIME = 10000; //miliseconds
     private static String mFileName = null;
+    private static final String START_RECORDING_DESCRIPTION = "Rozpocznij nagrywanie";
+    private static final String STOP_RECORDING_DESCRIPTION = "Zatrzymaj nagrywanie";
+    private static final String START_PLAYING_DESCRIPTION = "Rozpocznij odtwarzanie";
+    private static final String STOP_PLAYING_DESCRIPTION = "Zatrzymaj odtwarzanie";
 
     private RecordButton mRecordButton = null;
     private MediaRecorder mRecorder = null;
@@ -53,7 +57,7 @@ public class SoundCaptureActivity extends Activity {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 stopPlaying();
-                mPlayButton.setText("Start playing");
+                mPlayButton.setText(START_PLAYING_DESCRIPTION);
                 paramNoPlay = true;
             }
         });
@@ -100,12 +104,12 @@ public class SoundCaptureActivity extends Activity {
             public void onClick(View v) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    setText("Stop recording");
+                    setText(STOP_RECORDING_DESCRIPTION);
                     Handler handler = new Handler();
                     Runnable r = new Runnable() {
                         public void run() {
                             if (mRecorder != null) {
-                                mRecordButton.setText("Start recording");
+                                mRecordButton.setText(START_RECORDING_DESCRIPTION);
                                 mRecorder.stop();
                                 mRecorder.release();
                                 mRecorder = null;
@@ -115,7 +119,7 @@ public class SoundCaptureActivity extends Activity {
                     };
                     handler.postDelayed(r, RECORDING_TIME);
                 } else {
-                    setText("Start recording");
+                    setText(START_RECORDING_DESCRIPTION);
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -123,7 +127,7 @@ public class SoundCaptureActivity extends Activity {
 
         public RecordButton(Context ctx) {
             super(ctx);
-            setText("Start recording");
+            setText(START_RECORDING_DESCRIPTION);
             setOnClickListener(clicker);
         }
     }
@@ -139,9 +143,9 @@ public class SoundCaptureActivity extends Activity {
                 }
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
-                    setText("Stop playing");
+                    setText(STOP_PLAYING_DESCRIPTION);
                 } else {
-                    setText("Start playing");
+                    setText(START_PLAYING_DESCRIPTION);
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -149,7 +153,7 @@ public class SoundCaptureActivity extends Activity {
 
         public PlayButton(Context ctx) {
             super(ctx);
-            setText("Start playing");
+            setText(START_PLAYING_DESCRIPTION);
             setOnClickListener(clicker);
         }
     }
@@ -193,8 +197,8 @@ public class SoundCaptureActivity extends Activity {
 
         mPlayButton = new PlayButton(this);
         RelativeLayout.LayoutParams playParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        playParams.addRule(RelativeLayout.RIGHT_OF, mRecordButton.getId());
-        playParams.addRule(RelativeLayout.BELOW, desc.getId());
+        playParams.addRule(RelativeLayout.BELOW, mRecordButton.getId());
+        playParams.setMargins(0, 10, 0, 0);
 
         mPlayButton.setId(new Integer(3));
         ll.addView(mPlayButton, playParams);

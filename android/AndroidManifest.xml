@@ -14,6 +14,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
+    <!-- <uses-feature android:glEsVersion="0x00030000" android:required="true" /> -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -116,6 +120,22 @@
         <activity
             android:name=".multimediasolid.MultimediaSolidActivity"
             android:label="@string/title_activity_multimedia_solid"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".multimediasolid.MultimediaSolidRRActivity"
+            android:label="@string/title_activity_multimedia_solid_rr"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.elektryczny.rzengineer.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".multimediasolid.raj.RajActivity"
+            android:label="@string/title_activity_raj"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

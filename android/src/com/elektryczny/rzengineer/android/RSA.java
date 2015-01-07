@@ -33,8 +33,8 @@ public class RSA {
     private String publicKeyPath;
 
     public RSA(String privKey, String pubKey) {
-        this.privateKeyPath = MultimediaFileManager.RESOURCES_DIRECTORY + privKey;
-        this.publicKeyPath = MultimediaFileManager.RESOURCES_DIRECTORY + pubKey;
+        this.privateKeyPath = MultimediaFileManager.getResourcesDirectory() + privKey;
+        this.publicKeyPath = MultimediaFileManager.getResourcesDirectory() + pubKey;
     }
 
     public void generateNewKeys() {

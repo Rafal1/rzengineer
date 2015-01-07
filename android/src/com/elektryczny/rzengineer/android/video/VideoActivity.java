@@ -40,10 +40,10 @@ public class VideoActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);  // create a file to save the video
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
-                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
-                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10); // set the video image quality to high
+                fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
                 startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -65,7 +65,7 @@ public class VideoActivity extends Activity {
                 startActivity(vi);
             }
         });
-        
+
     }
 
     private static Uri getOutputMediaFileUri(int type) {

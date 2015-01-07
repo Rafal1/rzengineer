@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.elektryczny.rzengineer.android.messages.MessagesCryptoActivity;
 import com.elektryczny.rzengineer.android.multimediasolid.MultimediaSolidActivity;
+import com.elektryczny.rzengineer.android.multimediasolid.MultimediaSolidRRActivity;
+import com.elektryczny.rzengineer.android.multimediasolid.raj.WallpaperActivity;
+import com.elektryczny.rzengineer.android.multimediasolid.raj.WallpaperPicker;
 import com.elektryczny.rzengineer.android.picture.PictureActivity;
 import com.elektryczny.rzengineer.android.sound.SoundCaptureActivity;
 import com.elektryczny.rzengineer.android.video.VideoActivity;

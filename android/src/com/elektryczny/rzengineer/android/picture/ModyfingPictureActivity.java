@@ -13,14 +13,17 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+
 import com.elektryczny.rzengineer.android.DrawingView;
 import com.elektryczny.rzengineer.android.FileEnum;
 import com.elektryczny.rzengineer.android.MultimediaFileManager;
@@ -176,9 +179,11 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
                     Bitmap bmpNormal = normalView.getDrawingCache();
                     try {
                         outLayer = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_LAYER_FILE));
+                        bmpLayer.setPremultiplied(true);
                         bmpLayer.compress(Bitmap.CompressFormat.PNG, 100, outLayer);
 
                         outNormal = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE));
+                        bmpNormal.setPremultiplied(true);
                         bmpNormal.compress(Bitmap.CompressFormat.JPEG, 100, outNormal);
 
                     } catch (Exception e) {
@@ -250,7 +255,7 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
                 isRepaeted = false;
                 break;
             case R.id.action_picture_modification_back:
-                if(isRepaeted){
+                if (isRepaeted) {
                     isRepaeted = !isRepaeted;
                     ef = bitmap;
                 } else if (tmpBitmap != null) {

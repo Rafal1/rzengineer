@@ -39,8 +39,8 @@ public class PictureActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                PictureFileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, PictureFileUri); // set the image file name
+                PictureFileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, PictureFileUri);
                 startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         });
