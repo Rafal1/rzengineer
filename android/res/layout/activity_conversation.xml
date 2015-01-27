@@ -32,6 +32,7 @@
         android:imeActionLabel="Wyślij"
         android:imeOptions="actionSend"
         android:inputType="textMultiLine" />
+
     <Button
         android:id="@+id/sendMessageButton"
         android:layout_width="wrap_content"

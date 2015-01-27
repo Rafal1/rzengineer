@@ -1,62 +1,65 @@
-<ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content"
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.rafalzawadzki.rzengineer.video.PlayVideoActivity">
 
-    <SurfaceView
-        android:id="@+id/surfaceVideoView"
-        android:layout_marginTop="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="250dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.rafalzawadzki.rzengineer.video.PlayVideoActivity">
 
-    <ImageView
-        android:id="@+id/image_to_play_video_layer"
-        android:layout_width="fill_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        <SurfaceView
+            android:id="@+id/surfaceVideoView"
+            android:layout_marginTop="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_marginTop="10dp"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:text="Odtwórz video"
-        android:id="@+id/realPlayVideoButton"
-        android:layout_below="@+id/surfaceVideoView"
-        android:layout_alignLeft="@+id/surfaceVideoView"
-        android:layout_alignStart="@+id/surfaceVideoView" />
+        <ImageView
+            android:id="@+id/image_to_play_video_layer"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_marginTop="10dp"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:text="Pauzuj video"
-        android:id="@+id/pauseVideoButton"
-        android:layout_below="@+id/surfaceVideoView"
-        android:layout_alignRight="@+id/surfaceVideoView"
-        android:layout_alignEnd="@+id/surfaceVideoView" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginTop="10dp"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Odtwórz video"
+            android:id="@+id/realPlayVideoButton"
+            android:layout_below="@+id/surfaceVideoView"
+            android:layout_alignLeft="@+id/surfaceVideoView"
+            android:layout_alignStart="@+id/surfaceVideoView" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:text="Wróć"
-        android:id="@+id/videoPlayBackButton"
-        android:layout_below="@+id/pauseVideoButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_marginTop="10dp"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="Pauzuj video"
+            android:id="@+id/pauseVideoButton"
+            android:layout_below="@+id/surfaceVideoView"
+            android:layout_alignRight="@+id/surfaceVideoView"
+            android:layout_alignEnd="@+id/surfaceVideoView" />
 
-</RelativeLayout>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="Wróć"
+            android:id="@+id/videoPlayBackButton"
+            android:layout_below="@+id/pauseVideoButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+    </RelativeLayout>
 </ScrollView>

@@ -114,6 +114,3 @@ idea {
         }
     }
 }
-dependencies {
-    compile project(':rajawali')
-}

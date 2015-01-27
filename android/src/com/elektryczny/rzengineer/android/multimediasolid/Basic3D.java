@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
+import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
@@ -30,6 +31,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.elektryczny.rzengineer.android.MultimediaFileManager;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -43,59 +45,9 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
     public ModelBatch modelBatch;
     public Model model;
     public ModelInstance instance;
-    public static final String DEFAULT_PARTICLE = "particle/pre_particle.png";
-    private ParticleEffect currentEffects;
+    private ArrayList<ParticleEffect> currentCornerEffects = new ArrayList<ParticleEffect>();
+    private static Integer CORNER_EFFECTS = 8;
     private ParticleSystem particleSystem;
-//    class CameraController implements GestureDetector.GestureListener {
-//        public CameraInputController controller;
-//        private float previousZoom;
-//        private ModelInstance instance;
-//        @Override
-//        public boolean touchDown(float x, float y, int pointer, int button) {
-//            previousZoom = 0;
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean tap(float x, float y, int count, int button) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean longPress(float x, float y) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean fling(float velocityX, float velocityY, int button) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean pan(float x, float y, float deltaX, float deltaY) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean panStop(float x, float y, int pointer, int button) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean zoom(float initialDistance, float distance) {
-////            float newZoom = distance - initialDistance;
-////            float amount = newZoom - previousZoom;
-////            previousZoom = newZoom;
-////            float w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
-////            return controller.pinchZoom(amount / ((w > h) ? h : w));
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-//            return false;
-//        }
-//    }
 
     @Override
     public void create() {
@@ -109,25 +61,12 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
 
         modelBatch = new ModelBatch();
 
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //67
         cam.position.set(3f, 3f, 3f);
         cam.lookAt(0, 0, 0);
         cam.near = 1f;
         cam.far = 30f;
         cam.update();
-
-//        ModelBuilder modelBuilder = new ModelBuilder();
-//        model = modelBuilder.createBox(5f, 5f, 5f,
-//                new Material(ColorAttribute.createDiffuse(com.badlogic.gdx.graphics.Color.GREEN)),
-//                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-//        instance = new ModelInstance(model);
-
-//        FileHandle texTop = new FileHandle(new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE)));
-//        FileHandle texBottom = new FileHandle(new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_LAYER_FILE)));
-//        Texture texTile = new Texture(texTop);
-//        Texture texTile1 = new Texture(texBottom);
-//        Material mat = new Material(TextureAttribute.createDiffuse(texTile));
-//        Material mat1 = new Material(TextureAttribute.createDiffuse(texTile1));
 
         FileHandle texTop = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall1()));
         FileHandle texBottom = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall2()));
@@ -152,71 +91,71 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
 
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
-//        modelBuilder.
         MeshPartBuilder tileBuilder;
         tileBuilder = modelBuilder.part("top", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat1);
-//        tileBuilder.rect(-1f, 0.1f, 1f, 1f, 0.1f, 1f, 1f, 0.1f, -1f, -1f, 0.1f, -1f, -1f, 1f, 0f);
         tileBuilder.rect(-1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, -1f, -1f, 1f, -1f, -1f, 1f, 0f);
         tileBuilder = modelBuilder.part("bottom", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat2);
-//        tileBuilder.rect(-1f, -1f, -1f, 1f, -1f, -1f, 1f, -1f, 1f, -1f, -1f, 1f, 0f, -1f, 0f);
         tileBuilder.rect(-1f, -1f, -1f, 1f, -1f, -1f, 1f, -1f, 1f, -1f, -1f, 1f, 0f, -1f, 0f);
         tileBuilder = modelBuilder.part("front", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat3);
-//        tileBuilder.rect(-1f, 0.1f, 1f, -1f, -1f, 1f, 1f, -1f, 1f, 1f, 0.1f, 1f, 0f, 0f, 1f);
         tileBuilder.rect(-1f, 1f, 1f, -1f, -1f, 1f, 1f, -1f, 1f, 1f, 1f, 1f, 0f, 0f, 1f);
         tileBuilder = modelBuilder.part("left", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat4);
-//        tileBuilder.rect(-1f, 0.1f, 1f, -1f, 0.1f, -1f, -1f, -1f, -1f, -1f, -1f, 1f, -1f, 0f, 0f);
         tileBuilder.rect(-1f, 1f, 1f, -1f, 1f, -1f, -1f, -1f, -1f, -1f, -1f, 1f, -1f, 0f, 0f);
         tileBuilder = modelBuilder.part("right", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat5);
-//        tileBuilder.rect(1f, 0.1f, 1f, 1f, -1f, 1f, 1f, -1f, -1f, 1f, 0.1f, -1f, 0f, 0f, 1f);
         tileBuilder.rect(1f, 1f, 1f, 1f, -1f, 1f, 1f, -1f, -1f, 1f, 1f, -1f, 0f, 0f, 1f);
         tileBuilder = modelBuilder.part("back", GL10.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal | VertexAttributes.Usage.TextureCoordinates, mat6);
-//        tileBuilder.rect(-1f, 0.1f, -1f, 1f, 0.1f, -1f, 1f, -1f, -1f, -1f, -1f, -1f, 0f, 0f, 1f);
         tileBuilder.rect(-1f, 1f, -1f, 1f, 1f, -1f, 1f, -1f, -1f, -1f, -1f, -1f, 0f, 0f, 1f);
         model = modelBuilder.end();
-
-//        AssetManager am = new AssetManager();
-//        am.load("data/1200.jpg", Texture.class);
-//        am.update();
-//        am.finishLoading();
-//        Texture texTile = am.get("data/1200.jpg", Texture.class);
-
-
         instance = new ModelInstance(model); //Gdx.input.getAccelerometerY()
-        //instance.transform.rotate(Vector3.Z, 90f);
-
-//        instance.nodes.get(0).parts.get(0).material.set(mat);
-//        instance.nodes.get(0).parts.get(1).material.set(mat);
-//        instance.nodes.get(0).parts.get(2).material.set(mat);
-//        instance.nodes.get(0).parts.get(3).material.set(mat1);
-//        instance.nodes.get(0).parts.get(4).material.set(mat1);
-//        instance.nodes.get(0).parts.get(5).material.set(mat);
-
-//        Array<NodePart> x = instance.nodes.get(0).parts;
-//        Integer xd = x.size;
-
-
         AssetManager assets = new AssetManager();
-//        assets.load(DEFAULT_PARTICLE, Texture.class);
 
         particleSystem = ParticleSystem.get();
         PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
-//        pointSpriteBatch.setTexture(assets.get(DEFAULT_PARTICLE, Texture.class));
-//        BillboardParticleBatch pointSpriteBatch = new BillboardParticleBatch();
+        BillboardParticleBatch pointBillboardBatch = new BillboardParticleBatch();
         pointSpriteBatch.setCamera(cam);
         particleSystem = ParticleSystem.get();
         particleSystem.add(pointSpriteBatch);
+        particleSystem = ParticleSystem.get();
+        particleSystem.add(pointBillboardBatch);
 
         ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
         ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
         assets.setLoader(ParticleEffect.class, loader);
-        assets.load("particle/point.pfx", ParticleEffect.class, loadParam);
+        assets.load("particle/hej.pfx", ParticleEffect.class, loadParam);
+        assets.load("particle/dust.pfx", ParticleEffect.class, loadParam);
         assets.finishLoading();
 
-        ParticleEffect originalEffect = assets.get("particle/point.pfx");
+        ParticleEffect originalEffect = assets.get("particle/hej.pfx");
         ParticleEffect effect = originalEffect.copy();
         effect.init();
         effect.start();
         particleSystem.add(effect);
+
+        ArrayList<Vector3> vecDustTab = new ArrayList<Vector3>();
+        Vector3 moveDust = new Vector3(1f, 1f, 1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(1f, -1f, 1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(-1f, -1f, 1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(-1f, 1f, 1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(1f, 1f, -1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(1f, -1f, -1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(-1f, -1f, -1f);
+        vecDustTab.add(moveDust);
+        moveDust = new Vector3(-1f, 1f, -1f);
+        vecDustTab.add(moveDust);
+
+        for (int i = 0; i < CORNER_EFFECTS; i++) {
+            ParticleEffect originalEffect1 = assets.get("particle/dust.pfx"); // after creating effects "particle/dust"+i+".pfx"
+            currentCornerEffects.add(i, originalEffect1.copy());
+            currentCornerEffects.get(i).translate(vecDustTab.get(i));
+            currentCornerEffects.get(i).init();
+            currentCornerEffects.get(i).start();
+            particleSystem.add(currentCornerEffects.get(i));
+        }
 
         camController = new
                 CameraInputController(cam);
@@ -238,10 +177,33 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
 
         if (camController.isLongPressed()) {
             instance.transform.rotate(Vector3.Z, 1f);
+            for (int i = 0; i < CORNER_EFFECTS; i++) { // CORNER_EFFECTS
+//                cam.rotate(Vector3.X, 0.1f);
+//                float xf = (float) (Math.sqrt(2) * Math.cos(CORNER_EFFECT_ROTATION_EAGLE));
+//                                float yf = (float) (Math.sqrt(2) * Math.sin(CORNER_EFFECT_ROTATION_EAGLE));
+//                cam.translate(new Vector3(0f, 0f, 0.1f));
+                particleSystem.update();
+                particleSystem.remove(currentCornerEffects.get(i));
+//
+//                if (CORNER_EFFECT_ROTATION_EAGLE.equals(360.0)) {
+//                    CORNER_EFFECT_ROTATION_EAGLE = 0.0;
+//                }
+//                float xf = (float) ( Math.cos(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
+//                float yf = (float) (Math.sin(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
+//                MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE = MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE + 1.0;
+
+//                currentCornerEffects.get(i).translate(new Vector3(xf, yf, 0f));
+//                currentCornerEffects.get(i).init();
+//                currentCornerEffects.get(i).start();
+////                particleSystem.add(currentCornerEffects.get(i));
+//                particleSystem.update();
+//                particleSystem.begin();
+//                particleSystem.draw();
+//                particleSystem.end();
+//                modelBatch.render(particleSystem);
+            }
         }
-//        if (Gdx.input.isTouched()) {
-//            instance.transform.rotate(Vector3.Z, 45f);
-//        }
+
         particleSystem.update(); // technically not necessary for rendering
         particleSystem.begin();
         particleSystem.draw();
@@ -266,7 +228,6 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
     @Override
     public void resume() {
     }
-
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {

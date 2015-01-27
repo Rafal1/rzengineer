@@ -1,24 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.rafalzawadzki.rzengineer.picture.ModyfingPictureActivity" >
-    <item android:id="@+id/action_picture_saturation"
+    tools:context="com.rafalzawadzki.rzengineer.picture.ModyfingPictureActivity">
+    <item
+        android:id="@+id/action_picture_saturation"
         android:title="nasycenie barw"
         android:orderInCategory="100"
         android:showAsAction="never" />
-    <item android:id="@+id/action_picture_contrast"
-            android:title="kontrast"
-            android:orderInCategory="100"
-            android:showAsAction="never" />
-    <item android:id="@+id/action_picture_greyscale"
-            android:title="odcień szarości"
-            android:orderInCategory="100"
-            android:showAsAction="never" />
-    <item android:id="@+id/action_picture_brightness"
-            android:title="jasność"
-            android:orderInCategory="100"
-            android:showAsAction="never" />
-    <item android:id="@+id/action_picture_modification_back"
-            android:title="cofnij efekt"
-            android:orderInCategory="100"
-            android:showAsAction="always" />
+    <item
+        android:id="@+id/action_picture_contrast"
+        android:title="kontrast"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_picture_greyscale"
+        android:title="odcień szarości"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_picture_brightness"
+        android:title="jasność"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+    <item
+        android:id="@+id/action_picture_modification_back"
+        android:title="cofnij efekt"
+        android:orderInCategory="100"
+        android:showAsAction="always" />
 </menu>

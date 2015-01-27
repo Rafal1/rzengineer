@@ -1,0 +1,130 @@
+        tileBuilder.rect(-1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, -1f, -1f, 1f, -1f, 0f, 1f, 0f);
+
+//        if (Gdx.input.isTouched()) {
+//            instance.transform.rotate(Vector3.Z, 45f);
+//        }
+
+Application multimedia solid
+
+OpenGL ES
+// OpenGL ES -> extends Activity {
+
+onCreate:
+//        Normal Activity
+//        setContentView(R.layout.activity_multimedia_solid);
+
+//        view = new MultimediaSolidView(this);
+//        setContentView(view);
+
+        //create folder with images
+//        String path = MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME;
+//        MultimediaFileManager.createDirIfNotExists(path);
+
+        //behaviour depending on the images quantity
+//        File dir = new File(path);
+//        if (dir.isDirectory()) {
+//            String[] files = dir.list();
+//            imagesQunatity = files.length;
+//        }
+
+//        if (imagesQunatity.equals(0)) {
+//             establish default picture
+//        }
+
+Basi3D
+//    class CameraController implements GestureDetector.GestureListener {
+//        public CameraInputController controller;
+//        private float previousZoom;
+//        private ModelInstance instance;
+//        @Override
+//        public boolean touchDown(float x, float y, int pointer, int button) {
+//            previousZoom = 0;
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean tap(float x, float y, int count, int button) {
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean longPress(float x, float y) {
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean fling(float velocityX, float velocityY, int button) {
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean pan(float x, float y, float deltaX, float deltaY) {
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean panStop(float x, float y, int pointer, int button) {
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean zoom(float initialDistance, float distance) {
+////            float newZoom = distance - initialDistance;
+////            float amount = newZoom - previousZoom;
+////            previousZoom = newZoom;
+////            float w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
+////            return controller.pinchZoom(amount / ((w > h) ? h : w));
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+//            return false;
+//        }
+//    }
+
+//        ModelBuilder modelBuilder = new ModelBuilder();
+//        model = modelBuilder.createBox(5f, 5f, 5f,
+//                new Material(ColorAttribute.createDiffuse(com.badlogic.gdx.graphics.Color.GREEN)),
+//                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+//        instance = new ModelInstance(model);
+
+//        FileHandle texTop = new FileHandle(new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE)));
+//        FileHandle texBottom = new FileHandle(new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_LAYER_FILE)));
+//        Texture texTile = new Texture(texTop);
+//        Texture texTile1 = new Texture(texBottom);
+//        Material mat = new Material(TextureAttribute.createDiffuse(texTile));
+//        Material mat1 = new Material(TextureAttribute.createDiffuse(texTile1));
+
+//        tileBuilder.rect(-1f, 0.1f, 1f, 1f, 0.1f, 1f, 1f, 0.1f, -1f, -1f, 0.1f, -1f, -1f, 1f, 0f);
+
+//        AssetManager am = new AssetManager();
+//        am.load("data/1200.jpg", Texture.class);
+//        am.update();
+//        am.finishLoading();
+//        Texture texTile = am.get("data/1200.jpg", Texture.class);
+//        assets.load(DEFAULT_PARTICLE, Texture.class);
+
+        //instance.transform.rotate(Vector3.Z, 90f);
+
+//        Array<NodePart> x = instance.nodes.get(0).parts;
+//        Integer xd = x.size;
+
+public class PFXPool extends Pool<ParticleEffect> {
+    private ParticleEffect sourceEffect;
+
+    public PFXPool(ParticleEffect sourceEffect) {
+        this.sourceEffect = sourceEffect;
+    }
+
+    @Override
+    public void free(ParticleEffect pfx) {
+        pfx.reset();
+        super.free(pfx);
+    }
+
+    @Override
+    protected ParticleEffect newObject() {
+        return sourceEffect.copy();
+    }
+}

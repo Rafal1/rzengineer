@@ -18,5 +18,7 @@
     <string name="title_activity_show_picture">ShowPictureActivity</string>
     <string name="title_activity_modyfing_picture">ModyfingPictureActivity</string>
     <string name="title_activity_multimedia_solid">MultimediaSolidActivity</string>
+    <string name="title_activity_multimedia_solid_rr">MultimediaSolidRRActivity</string>
+    <string name="title_activity_raj">RajActivity</string>
 
 </resources>

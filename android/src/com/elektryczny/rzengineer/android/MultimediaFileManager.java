@@ -30,7 +30,6 @@ public class MultimediaFileManager {
     private static final String MULTIMEDIA_SOLID_WALL5_NAME = "5.jpg";
     private static final String MULTIMEDIA_SOLID_WALL6_NAME = "6.jpg";
 
-
     public static String getPathToFile(FileEnum filename) {
         String path = BASIC_PATH + MULTIMEDIA_DIRECTORY_NAME;
         if (createDirIfNotExists(path)) {

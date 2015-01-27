@@ -31,6 +31,8 @@ public class RSA {
     private String encrypted, decrypted;
     private String privateKeyPath;
     private String publicKeyPath;
+    private static final Integer keyLength = 2048;
+    private static final String ALG_NAME = "RSA";
 
     public RSA(String privKey, String pubKey) {
         this.privateKeyPath = MultimediaFileManager.getResourcesDirectory() + privKey;
@@ -39,11 +41,11 @@ public class RSA {
 
     public void generateNewKeys() {
         try {
-            kpg = KeyPairGenerator.getInstance("RSA");
+            kpg = KeyPairGenerator.getInstance(ALG_NAME);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        kpg.initialize(2048);
+        kpg.initialize(keyLength);
         kp = kpg.genKeyPair();
         try {
             FileOutputStream keyPub = new FileOutputStream(publicKeyPath);
@@ -79,7 +81,7 @@ public class RSA {
 
         KeyFactory kf = null;
         try {
-            kf = KeyFactory.getInstance("RSA");
+            kf = KeyFactory.getInstance(ALG_NAME);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -112,7 +114,7 @@ public class RSA {
 
         KeyFactory kf = null;
         try {
-            kf = KeyFactory.getInstance("RSA");
+            kf = KeyFactory.getInstance(ALG_NAME);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -128,7 +130,7 @@ public class RSA {
 
     public String Encrypt(String plain) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         PublicKey publicKeyObj = getPublicKeyFromStream();
-        cipher = Cipher.getInstance("RSA");
+        cipher = Cipher.getInstance(ALG_NAME);
         cipher.init(Cipher.ENCRYPT_MODE, publicKeyObj);
         encryptedBytes = cipher.doFinal(plain.getBytes());
 
@@ -139,7 +141,7 @@ public class RSA {
 
     public String Decrypt(String result) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         PrivateKey privateKeyObj = getPrivateKeyFromStream();
-        cipher1 = Cipher.getInstance("RSA");
+        cipher1 = Cipher.getInstance(ALG_NAME);
         cipher1.init(Cipher.DECRYPT_MODE, privateKeyObj);
         decryptedBytes = cipher1.doFinal(stringToBytes(result));
         decrypted = new String(decryptedBytes);

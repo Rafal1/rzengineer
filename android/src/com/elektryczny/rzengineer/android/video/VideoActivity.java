@@ -73,7 +73,6 @@ public class VideoActivity extends Activity {
     }
 
     private static File getOutputMediaFile(int type) {
-        // Create a media file name
         File mediaFile;
         if (type == MEDIA_TYPE_VIDEO) {
             mediaFile = new File(MultimediaFileManager.getPathToFile(FileEnum.VIDEO_FILE));

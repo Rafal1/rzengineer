@@ -33,6 +33,7 @@ public class MessagesCryptoActivity extends Activity {
         generateB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 RSA alg = new RSA("privateKey.pem", "publicKey.pub");
                 alg.generateNewKeys();
                 Toast genDone = Toast.makeText(getBaseContext(), "Wygenerowano i zapisano klucze", Toast.LENGTH_SHORT);
@@ -54,16 +55,12 @@ public class MessagesCryptoActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.messages_crypto, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;

@@ -1,8 +1,10 @@
 package com.elektryczny.rzengineer.android.picture;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -170,6 +172,7 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
             saveDialog.setTitle("Zapisz obrazek");
             saveDialog.setMessage("Zapisać obrazek?");
             saveDialog.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.KITKAT)
                 public void onClick(DialogInterface dialog, int which) {
                     drawView.setDrawingCacheEnabled(true);
                     normalView.setDrawingCacheEnabled(true);

@@ -29,7 +29,7 @@ import javax.crypto.NoSuchPaddingException;
 public class ConversationActivity extends Activity {
     private static ListView msgList = null;
     private EditText editText;
-    public static ConversationAdapter ad;
+    private static ConversationAdapter ad;
     private ArrayList<Message> listOfMessage = new ArrayList<Message>();
     public static final String ENCRYPTED_MESSAGE_EXTRAS = "Encrypted";
     public static final String RECEIVER_MESSAGE_EXTRAS = "Receiver";

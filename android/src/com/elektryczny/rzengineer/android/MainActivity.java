@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.elektryczny.rzengineer.android.messages.MessagesCryptoActivity;
 import com.elektryczny.rzengineer.android.multimediasolid.MultimediaSolidActivity;
-import com.elektryczny.rzengineer.android.multimediasolid.MultimediaSolidRRActivity;
-import com.elektryczny.rzengineer.android.multimediasolid.raj.WallpaperActivity;
-import com.elektryczny.rzengineer.android.multimediasolid.raj.WallpaperPicker;
 import com.elektryczny.rzengineer.android.picture.PictureActivity;
 import com.elektryczny.rzengineer.android.sound.SoundCaptureActivity;
 import com.elektryczny.rzengineer.android.video.VideoActivity;
@@ -29,9 +26,9 @@ public class MainActivity extends Activity {
         TextView title = (TextView) findViewById(R.id.textView);
         title.setText("CommMethods");
         TextView desc1 = (TextView) findViewById(R.id.textView2);
-        desc1.setText("Jest to aplikacja mająca na celu przedstawienie metod komunikacji wykorzystując do tego celu treści multimedialne obsługiwane przez system Android. Bazuje na obserwacjach aktualnych trendów przez autora.");
+        desc1.setText("Jest to aplikacja mająca na celu przedstawienie metod komunikacji wykorzystując do tego celu treści multimedialne obsługiwane przez system Android. Aplikacja opiera się na obserwacjach aktualnych trendów przez autora.");
         TextView desc2 = (TextView) findViewById(R.id.textView3);
-        desc2.setText("Proszę wybrać metodę z poniższej listy.");
+        desc2.setText("Proszę wybrać którąś metodę z poniższej listy.");
 
         Button soundB = (Button) findViewById(R.id.soundButton);
         soundB.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +70,6 @@ public class MainActivity extends Activity {
         solidB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Basic3D solid = new Basic3D();
-//                solid.create();
                 Intent newIntent = new Intent(getBaseContext(), MultimediaSolidActivity.class);
                 startActivity(newIntent);
             }
@@ -83,16 +78,11 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

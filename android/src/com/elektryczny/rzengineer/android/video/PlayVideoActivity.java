@@ -30,6 +30,8 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
     private boolean pausing = false;
     private ImageView drawView;
     private Boolean isStarted = false;
+    private static final String STOP_VIDEO = "Pauzuj film";
+    private static final String RESUME_VIDEO = "Wznów film";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
             public void onClick(View v) {
                 if (pausing) {
                     Button pauseVideoB = (Button) findViewById(R.id.pauseVideoButton);
-                    pauseVideoB.setText("Pauzuj film");
+                    pauseVideoB.setText(STOP_VIDEO);
                 }
                 isStarted = true;
                 pausing = false;
@@ -105,11 +107,11 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
                     if (pausing) {
                         pausing = false;
                         mediaPlayer.start();
-                        pauseVideoB.setText("Pauzuj film");
+                        pauseVideoB.setText(STOP_VIDEO);
                     } else {
                         pausing = true;
                         mediaPlayer.pause();
-                        pauseVideoB.setText("Wznów film");
+                        pauseVideoB.setText(RESUME_VIDEO);
                     }
                 }
             }
@@ -141,7 +143,6 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.play_video, menu);
         return false;
     }
 
@@ -153,10 +154,6 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
         return super.onOptionsItemSelected(item);
     }
 

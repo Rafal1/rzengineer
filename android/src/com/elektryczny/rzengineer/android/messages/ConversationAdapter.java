@@ -55,10 +55,6 @@ public class ConversationAdapter extends BaseAdapter {
         fromView.setText(msg.getFrom());
         descView.setText(msg.getContent());
         timeView.setText(dateToString(msg.getDateSent()));
-//           if(msg.isSent())
-//        	   timeView.setText(dateToString(msg.getDateSent()));
-//           else
-//        	   timeView.setText("Sending message failed, tap to retry");
         return v;
     }
 

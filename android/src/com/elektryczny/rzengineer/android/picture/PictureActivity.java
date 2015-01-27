@@ -21,8 +21,8 @@ import java.io.File;
 
 public class PictureActivity extends Activity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    public static Uri PictureFileUri;
-    public static final int MEDIA_TYPE_IMAGE = 1;
+    private static Uri PictureFileUri;
+    private static final int MEDIA_TYPE_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
