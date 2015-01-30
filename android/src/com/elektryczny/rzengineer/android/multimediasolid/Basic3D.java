@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.BillboardParticleBatch;
+import com.badlogic.gdx.graphics.g3d.particles.batches.ParticleBatch;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.elektryczny.rzengineer.android.MultimediaFileManager;
 
 import java.io.File;
@@ -39,13 +41,14 @@ import javax.microedition.khronos.opengles.GL10;
  * @author Rafał Zawadzki
  */
 public class Basic3D extends ApplicationAdapter implements GestureDetector.GestureListener {
-    public Environment environment;
-    public PerspectiveCamera cam;
-    public CameraInputController camController;
-    public ModelBatch modelBatch;
-    public Model model;
-    public ModelInstance instance;
+    private Environment environment;
+    private PerspectiveCamera cam;
+    private CameraInputController camController;
+    private ModelBatch modelBatch;
+    private Model model;
+    private ModelInstance instance;
     private ArrayList<ParticleEffect> currentCornerEffects = new ArrayList<ParticleEffect>();
+    private AssetManager assets = AssetManagerSingleton.getInstance();
     private static Integer CORNER_EFFECTS = 8;
     private ParticleSystem particleSystem;
 
@@ -59,9 +62,9 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.9f, 0.9f, 0.9f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 
-        modelBatch = new ModelBatch();
+        modelBatch = ModelBatchSingleton.getInstance();
 
-        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //67
+        cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(3f, 3f, 3f);
         cam.lookAt(0, 0, 0);
         cam.near = 1f;
@@ -106,8 +109,10 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         tileBuilder.rect(-1f, 1f, -1f, 1f, 1f, -1f, 1f, -1f, -1f, -1f, -1f, -1f, 0f, 0f, 1f);
         model = modelBuilder.end();
         instance = new ModelInstance(model); //Gdx.input.getAccelerometerY()
-        AssetManager assets = new AssetManager();
 
+        particleSystem = ParticleSystem.get();
+        particleSystem.update();
+        particleSystem.removeAll(); //first
         particleSystem = ParticleSystem.get();
         PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
         BillboardParticleBatch pointBillboardBatch = new BillboardParticleBatch();
@@ -117,7 +122,14 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         particleSystem = ParticleSystem.get();
         particleSystem.add(pointBillboardBatch);
 
-        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
+        assets.clear();
+        Integer batNumber = particleSystem.getBatches().size;
+        Array<ParticleBatch<?>> batInSystem = particleSystem.getBatches();
+        if (batNumber > 2) { //second (particle effects aren't black)
+            batInSystem.removeIndex(0);
+            batInSystem.removeIndex(0);
+        }
+        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(batInSystem);
         ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
         assets.setLoader(ParticleEffect.class, loader);
         assets.load("particle/hej.pfx", ParticleEffect.class, loadParam);
@@ -148,8 +160,8 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         moveDust = new Vector3(-1f, 1f, -1f);
         vecDustTab.add(moveDust);
 
+        ParticleEffect originalEffect1 = assets.get("particle/dust.pfx"); // after creating effects "particle/dust"+i+".pfx"
         for (int i = 0; i < CORNER_EFFECTS; i++) {
-            ParticleEffect originalEffect1 = assets.get("particle/dust.pfx"); // after creating effects "particle/dust"+i+".pfx"
             currentCornerEffects.add(i, originalEffect1.copy());
             currentCornerEffects.get(i).translate(vecDustTab.get(i));
             currentCornerEffects.get(i).init();
@@ -167,7 +179,6 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
     @Override
     public void render() {
         camController.update();
-
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -176,32 +187,7 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         modelBatch.end();
 
         if (camController.isLongPressed()) {
-            instance.transform.rotate(Vector3.Z, 1f);
-            for (int i = 0; i < CORNER_EFFECTS; i++) { // CORNER_EFFECTS
-//                cam.rotate(Vector3.X, 0.1f);
-//                float xf = (float) (Math.sqrt(2) * Math.cos(CORNER_EFFECT_ROTATION_EAGLE));
-//                                float yf = (float) (Math.sqrt(2) * Math.sin(CORNER_EFFECT_ROTATION_EAGLE));
-//                cam.translate(new Vector3(0f, 0f, 0.1f));
-                particleSystem.update();
-                particleSystem.remove(currentCornerEffects.get(i));
-//
-//                if (CORNER_EFFECT_ROTATION_EAGLE.equals(360.0)) {
-//                    CORNER_EFFECT_ROTATION_EAGLE = 0.0;
-//                }
-//                float xf = (float) ( Math.cos(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
-//                float yf = (float) (Math.sin(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
-//                MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE = MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE + 1.0;
-
-//                currentCornerEffects.get(i).translate(new Vector3(xf, yf, 0f));
-//                currentCornerEffects.get(i).init();
-//                currentCornerEffects.get(i).start();
-////                particleSystem.add(currentCornerEffects.get(i));
-//                particleSystem.update();
-//                particleSystem.begin();
-//                particleSystem.draw();
-//                particleSystem.end();
-//                modelBatch.render(particleSystem);
-            }
+            cam.rotateAround(new Vector3(0, 0, 0), Vector3.Z, 1f);
         }
 
         particleSystem.update(); // technically not necessary for rendering
@@ -209,12 +195,16 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         particleSystem.draw();
         particleSystem.end();
         modelBatch.render(particleSystem);
+
     }
 
     @Override
     public void dispose() {
+        assets.clear();
+        particleSystem.removeAll();
         modelBatch.dispose();
         model.dispose();
+
     }
 
     @Override
@@ -223,6 +213,9 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
 
     @Override
     public void pause() {
+        particleSystem.removeAll();
+        assets.clear();
+        super.pause();
     }
 
     @Override

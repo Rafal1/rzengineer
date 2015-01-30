@@ -128,3 +128,49 @@ public class PFXPool extends Pool<ParticleEffect> {
         return sourceEffect.copy();
     }
 }
+
+//            PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
+//            BillboardParticleBatch pointBillboardBatch = new BillboardParticleBatch();
+//            Array<ParticleBatch<?>> tabBatch = new Array<ParticleBatch<?>>();
+//            tabBatch.add(pointBillboardBatch);
+//            tabBatch.add(pointSpriteBatch);
+//            ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(tabBatch);
+//            ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
+//            assets.setLoader(ParticleEffect.class, loader);
+//            assets.load("particle/hej.pfx", ParticleEffect.class, loadParam);
+//            assets.load("particle/dust.pfx", ParticleEffect.class, loadParam);
+//            assets.finishLoading();
+
+//            ParticleEffect pe = originalEffect1.copy();
+//            pe.translate(vecDustTab.get(i));
+//            pe.init();
+//            pe.start();
+//            particleSystem.add(pe);
+
+Circular motion          alternatywa   // cam.rotate(Vector3.X, 0.3f);
+
+
+//            instance.transform.rotate(Vector3.Z, 1f);
+//            for (int i = 0; i < 1; i++) { // CORNER_EFFECTS
+//                float xf = (float) (Math.sqrt(2) * Math.cos(CORNER_EFFECT_ROTATION_EAGLE));
+//                                float yf = (float) (Math.sqrt(2) * Math.sin(CORNER_EFFECT_ROTATION_EAGLE));
+//                cam.translate(new Vector3(0f, 0f, 0.1f));
+//                particleSystem.update();
+//                particleSystem.remove(currentCornerEffects.get(i));
+//
+//                if (CORNER_EFFECT_ROTATION_EAGLE.equals(360.0)) {
+//                    CORNER_EFFECT_ROTATION_EAGLE = 0.0;
+//                }
+//                float xf = (float) ( Math.cos(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
+//                float yf = (float) (Math.sin(MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE));
+//                MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE = MultimediaFileManager.CORNER_EFFECT_ROTATION_EAGLE + 1.0;
+
+//                currentCornerEffects.get(i).translate(new Vector3(xf, yf, 0f));
+//                currentCornerEffects.get(i).init();
+//                currentCornerEffects.get(i).start();
+////                particleSystem.add(currentCornerEffects.get(i));
+//                particleSystem.update();
+//                particleSystem.begin();
+//                particleSystem.draw();
+//                particleSystem.end();
+//                modelBatch.render(particleSystem);

@@ -1,6 +1,7 @@
 package com.elektryczny.rzengineer.android.multimediasolid;
 
 import android.os.Bundle;
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
@@ -24,4 +25,9 @@ public class MultimediaSolidActivity extends AndroidApplication {
         super.onResume();
     }
 
+    @Override
+    protected void onDestroy() {
+        this.exit();
+        super.onDestroy();
+    }
 }
