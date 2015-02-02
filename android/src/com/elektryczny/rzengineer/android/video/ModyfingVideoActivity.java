@@ -304,16 +304,13 @@ public class ModyfingVideoActivity extends Activity implements View.OnClickListe
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
     }
 }

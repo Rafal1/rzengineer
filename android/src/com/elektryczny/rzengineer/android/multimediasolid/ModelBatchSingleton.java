@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 public class ModelBatchSingleton {
     private static volatile ModelBatch batch;
 
-    private ModelBatchSingleton(){
+    private ModelBatchSingleton() {
 
     }
 
