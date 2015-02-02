@@ -3,7 +3,7 @@
     package="com.elektryczny.rzengineer.android" >
 
     <uses-sdk
-        android:minSdkVersion="17"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -120,14 +120,7 @@
         <activity
             android:name=".multimediasolid.MultimediaSolidActivity"
             android:label="@string/title_activity_multimedia_solid"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.elektryczny.rzengineer.android.MainActivity" />
-        </activity>
-        <activity
-            android:name=".multimediasolid.raj.RajActivity"
-            android:label="@string/title_activity_raj"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

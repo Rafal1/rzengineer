@@ -115,7 +115,6 @@ public class ConversationActivity extends Activity {
         listOfMessage.add(msg);
         listOfMessage.add(msg2);
         editText.setText("");
-//        editText.clearFocus();
         hideKeyboard();
         ad.notifyDataSetChanged();
     }
@@ -156,7 +155,6 @@ public class ConversationActivity extends Activity {
         listOfMessage.add(msg);
         listOfMessage.add(msg2);
         editText.setText("");
-//        editText.clearFocus();
         hideKeyboard();
         ad.notifyDataSetChanged();
     }
