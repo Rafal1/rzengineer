@@ -217,12 +217,13 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:text="Wróć"
+        android:text="@string/back"
         android:id="@+id/videoModyfingBackButton"
         android:layout_toEndOf="@+id/video_color_palette"
         android:layout_alignRight="@+id/surfaceVideoEditView"
         android:layout_alignEnd="@+id/surfaceVideoEditView"
         android:layout_alignBottom="@+id/video_color_palette"
-        android:layout_alignTop="@+id/video_color_palette" />
+        android:layout_alignTop="@+id/video_color_palette"
+        android:layout_toRightOf="@+id/video_color_palette" />
 
 </RelativeLayout>

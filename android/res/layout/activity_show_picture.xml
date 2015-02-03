@@ -33,7 +33,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
-            android:text="Wróć"
+            android:text="@string/back"
             android:id="@+id/pictureShowBackButton"
             android:layout_below="@+id/picture_activity_image_to_show"
             android:layout_centerHorizontal="true"

@@ -30,8 +30,8 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
     private boolean pausing = false;
     private ImageView drawView;
     private Boolean isStarted = false;
-    private static final String STOP_VIDEO = "Pauzuj film";
-    private static final String RESUME_VIDEO = "Wznów film";
+    private final String STOP_VIDEO = getResources().getString(R.string.pause_video);
+    private final String RESUME_VIDEO = getResources().getString(R.string.resume_video);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

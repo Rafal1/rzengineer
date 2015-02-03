@@ -29,7 +29,7 @@
         android:layout_toLeftOf="@+id/sendMessageButton"
         android:ems="10"
         android:hint="Wiadomość"
-        android:imeActionLabel="Wyślij"
+        android:imeActionLabel="@string/send"
         android:imeOptions="actionSend"
         android:inputType="textMultiLine" />
 
@@ -40,6 +40,6 @@
         android:layout_alignBottom="@+id/new_message"
         android:layout_alignParentRight="true"
         android:onClick="sendMessage"
-        android:text="Wyślij" />
+        android:text="@string/send" />
 
 </RelativeLayout>
