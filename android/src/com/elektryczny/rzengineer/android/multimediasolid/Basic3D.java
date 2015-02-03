@@ -55,7 +55,7 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
     @Override
     public void create() {
         //create folder with images
-        String path = MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName();
+        String path = MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME;
         MultimediaFileManager.createDirIfNotExists(path);
 
         environment = new Environment();
@@ -71,12 +71,12 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
         cam.far = 30f;
         cam.update();
 
-        FileHandle texTop = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall1()));
-        FileHandle texBottom = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall2()));
-        FileHandle texFront = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall3()));
-        FileHandle texLeft = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall4()));
-        FileHandle texRight = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall5()));
-        FileHandle texBack = new FileHandle(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + MultimediaFileManager.getMultimediaSolidWall6()));
+        FileHandle texTop = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL1_NAME));
+        FileHandle texBottom = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL2_NAME));
+        FileHandle texFront = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL3_NAME));
+        FileHandle texLeft = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL4_NAME));
+        FileHandle texRight = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL5_NAME));
+        FileHandle texBack = new FileHandle(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + MultimediaFileManager.MULTIMEDIA_SOLID_WALL6_NAME));
 
         Texture texTile1 = new Texture(texTop);
         Texture texTile2 = new Texture(texBottom);

@@ -20,10 +20,10 @@ public class MultimediaSolidActivity extends AndroidApplication {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Integer imagesFiles = new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName()).listFiles().length;
+        Integer imagesFiles = new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME).listFiles().length;
         for (Integer i = imagesFiles + 1; i <= SOLID_WALLS; i++) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            PictureFileUri = Uri.fromFile(new File(MultimediaFileManager.getResourcesDirectory() + MultimediaFileManager.getSolidImagesDirectoryName() + i + ".jpg"));
+            PictureFileUri = Uri.fromFile(new File(MultimediaFileManager.RESOURCES_DIRECTORY + MultimediaFileManager.SOLID_IMAGES_DIRECTORY_NAME + i + ".jpg"));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, PictureFileUri);
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }

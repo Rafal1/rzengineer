@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class SoundCaptureActivity extends Activity {
     private static final String LOG_TAG = "AudioRecord";
-    private static final Integer RECORDING_TIME = 10000; //miliseconds
+    private static final Integer RECORDING_TIME_MS = 10000;
     private static String mFileName = null;
     private static final String START_RECORDING_DESCRIPTION = "Rozpocznij nagrywanie";
     private static final String STOP_RECORDING_DESCRIPTION = "Zatrzymaj nagrywanie";
@@ -80,7 +80,7 @@ public class SoundCaptureActivity extends Activity {
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(mFileName);
-        mRecorder.setMaxDuration(RECORDING_TIME); //10sec
+        mRecorder.setMaxDuration(RECORDING_TIME_MS); //10sec
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         try {
             mRecorder.prepare();
@@ -117,7 +117,7 @@ public class SoundCaptureActivity extends Activity {
                             }
                         }
                     };
-                    handler.postDelayed(r, RECORDING_TIME);
+                    handler.postDelayed(r, RECORDING_TIME_MS);
                 } else {
                     setText(START_RECORDING_DESCRIPTION);
                 }

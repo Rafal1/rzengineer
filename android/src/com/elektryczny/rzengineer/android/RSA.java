@@ -35,8 +35,8 @@ public class RSA {
     private static final String ALG_NAME = "RSA";
 
     public RSA(String privKey, String pubKey) {
-        this.privateKeyPath = MultimediaFileManager.getResourcesDirectory() + privKey;
-        this.publicKeyPath = MultimediaFileManager.getResourcesDirectory() + pubKey;
+        this.privateKeyPath = MultimediaFileManager.RESOURCES_DIRECTORY + privKey;
+        this.publicKeyPath = MultimediaFileManager.RESOURCES_DIRECTORY + pubKey;
     }
 
     public void generateNewKeys() {
