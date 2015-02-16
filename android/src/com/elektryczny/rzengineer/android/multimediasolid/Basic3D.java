@@ -213,13 +213,12 @@ public class Basic3D extends ApplicationAdapter implements GestureDetector.Gestu
 
     @Override
     public void pause() {
-        particleSystem.removeAll();
-        assets.clear();
         super.pause();
     }
 
     @Override
     public void resume() {
+        super.resume();
     }
 
     @Override

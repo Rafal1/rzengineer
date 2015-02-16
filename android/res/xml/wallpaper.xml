@@ -1,4 +1,0 @@
-<wallpaper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:author="@string/hello_world"
-    android:description="@string/hello_world"
-	android:settingsActivity="com.evvid.wallpapers.islandnights.WallpaperSettings"/>
