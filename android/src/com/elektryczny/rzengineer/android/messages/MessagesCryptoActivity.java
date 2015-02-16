@@ -3,6 +3,7 @@ package com.elektryczny.rzengineer.android.messages;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.elektryczny.rzengineer.android.R;
 import com.elektryczny.rzengineer.android.RSA;
 
 public class MessagesCryptoActivity extends Activity {
+    private static Boolean isGenerating = false;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +36,27 @@ public class MessagesCryptoActivity extends Activity {
         generateB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!isGenerating) {
+                    new Thread(new Runnable() {
+                        public void run() {
+                            RSA alg = new RSA("privateKey.pem", "publicKey.pub");
+                            alg.generateNewKeys();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast genDone = Toast.makeText(getBaseContext(), "Wygenerowano i zapisano klucze", Toast.LENGTH_SHORT);
+                                    genDone.show();
+                                }
+                            });
+                            isGenerating = false;
+                        }
+                    }).start();
+                    isGenerating = true;
+                } else {
+                    Toast genDone = Toast.makeText(getBaseContext(), "Czekaj, klucze są właśnie generowane", Toast.LENGTH_SHORT);
+                    genDone.show();
+                }
 
-                RSA alg = new RSA("privateKey.pem", "publicKey.pub");
-                alg.generateNewKeys();
-                Toast genDone = Toast.makeText(getBaseContext(), "Wygenerowano i zapisano klucze", Toast.LENGTH_SHORT);
-                genDone.show();
             }
         });
 
@@ -45,8 +64,13 @@ public class MessagesCryptoActivity extends Activity {
         startConversationB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent SoundIntent = new Intent(getBaseContext(), ConversationActivity.class);
-                startActivity(SoundIntent);
+                if (!isGenerating) {
+                    Intent SoundIntent = new Intent(getBaseContext(), ConversationActivity.class);
+                    startActivity(SoundIntent);
+                } else {
+                    Toast genDone = Toast.makeText(getBaseContext(), "Czekaj na wygenerowanie kluczy.", Toast.LENGTH_SHORT);
+                    genDone.show();
+                }
             }
         });
 
