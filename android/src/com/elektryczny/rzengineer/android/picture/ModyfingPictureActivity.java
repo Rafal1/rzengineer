@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.graphics.Bitmap;
@@ -19,6 +20,14 @@ import android.widget.LinearLayout;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -38,6 +47,7 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
     private ImageButton currPaint, drawBtn, eraseBtn, newBtn, saveBtn;
     private float smallBrush, mediumBrush, largeBrush;
     private Boolean isRepaeted = false;
+    private Boolean isProcessing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,60 +178,67 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
             });
             newDialog.show();
         } else if (view.getId() == R.id.picture_save_btn) {
-            AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
-            saveDialog.setTitle("Zapisz obrazek");
-            saveDialog.setMessage("Zapisać obrazek?");
-            saveDialog.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
-                @TargetApi(Build.VERSION_CODES.KITKAT)
-                public void onClick(DialogInterface dialog, int which) {
-                    drawView.setDrawingCacheEnabled(true);
-                    normalView.setDrawingCacheEnabled(true);
-                    FileOutputStream outLayer = null;
-                    FileOutputStream outNormal = null;
-                    Bitmap bmpLayer = drawView.getDrawingCache();
-                    Bitmap bmpNormal = normalView.getDrawingCache();
-                    try {
-                        outLayer = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_LAYER_FILE));
-                        bmpLayer.setPremultiplied(true);
-                        bmpLayer.compress(Bitmap.CompressFormat.PNG, 100, outLayer);
-
-                        outNormal = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE));
-                        bmpNormal.setPremultiplied(true);
-                        bmpNormal.compress(Bitmap.CompressFormat.JPEG, 100, outNormal);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
+            if (!isProcessing) {
+                AlertDialog.Builder saveDialog = new AlertDialog.Builder(this);
+                saveDialog.setTitle("Zapisz obrazek");
+                saveDialog.setMessage("Zapisać obrazek?");
+                saveDialog.setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    public void onClick(DialogInterface dialog, int which) {
+                        drawView.setDrawingCacheEnabled(true);
+                        normalView.setDrawingCacheEnabled(true);
+                        FileOutputStream outLayer = null;
+                        FileOutputStream outNormal = null;
+                        Bitmap bmpLayer = drawView.getDrawingCache();
+                        Bitmap bmpNormal = normalView.getDrawingCache();
                         try {
-                            if (bmpLayer != null && bmpNormal != null) {
-                                Toast savedToast = Toast.makeText(getApplicationContext(),
-                                        "Zapisano!", Toast.LENGTH_SHORT);
-                                savedToast.show();
-                                outLayer.close();
-                                outNormal.close();
-                            } else {
-                                Toast unsavedToast = Toast.makeText(getApplicationContext(),
-                                        "Nie zapisano", Toast.LENGTH_SHORT);
-                                unsavedToast.show();
-                                outLayer.close();
-                                outNormal.close();
+                            outLayer = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_LAYER_FILE));
+                            bmpLayer.setPremultiplied(true);
+                            bmpLayer.compress(Bitmap.CompressFormat.PNG, 100, outLayer);
 
-                            }
-                        } catch (IOException e) {
+                            outNormal = new FileOutputStream(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE));
+                            bmpNormal.setPremultiplied(true);
+                            bmpNormal.compress(Bitmap.CompressFormat.JPEG, 100, outNormal);
+
+                        } catch (Exception e) {
                             e.printStackTrace();
-                        }
-                    }
-                    drawView.destroyDrawingCache();
-                    normalView.destroyDrawingCache();
+                        } finally {
+                            try {
+                                if (bmpLayer != null && bmpNormal != null) {
+                                    Toast savedToast = Toast.makeText(getApplicationContext(),
+                                            "Zapisano!", Toast.LENGTH_SHORT);
+                                    savedToast.show();
+                                    outLayer.close();
+                                    outNormal.close();
+                                } else {
+                                    Toast unsavedToast = Toast.makeText(getApplicationContext(),
+                                            "Nie zapisano", Toast.LENGTH_SHORT);
+                                    unsavedToast.show();
+                                    outLayer.close();
+                                    outNormal.close();
 
-                }
-            });
-            saveDialog.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            saveDialog.show();
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        drawView.destroyDrawingCache();
+                        normalView.destroyDrawingCache();
+
+                    }
+                });
+                saveDialog.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                saveDialog.show();
+            } else {
+                Toast unsavedToast = Toast.makeText(getApplicationContext(),
+                        "Nie zapisano, trwa przetwarzanie obrazu", Toast.LENGTH_SHORT);
+                unsavedToast.show();
+            }
+
         }
     }
 
@@ -235,35 +252,109 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
     public boolean onOptionsItemSelected(MenuItem item) {
         Integer id = item.getItemId();
         Drawable toMakeEffect = normalView.getDrawable();
-        Bitmap bitmap = ((BitmapDrawable) toMakeEffect).getBitmap();
+        final Bitmap bitmap = ((BitmapDrawable) toMakeEffect).getBitmap();
         if (id != R.id.action_picture_modification_back) {
             tmpBitmap = bitmap;
         }
         Bitmap ef = null;
         switch (id) {
             case R.id.action_picture_saturation:
-                ef = PictureEffectManager.applySaturationFilter(bitmap, 5);
+                ExecutorService executorSaturation = Executors.newSingleThreadExecutor();
+                Callable<Bitmap> callableSaturation = new Callable<Bitmap>() {
+                    @Override
+                    public Bitmap call() {
+                        isProcessing = true;
+                        Bitmap newEf = PictureEffectManager.applySaturationFilter(bitmap, 5);
+                        return newEf;
+                    }
+                };
+                Future<Bitmap> future = executorSaturation.submit(callableSaturation);
+                try {
+                    ef = future.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                isProcessing = false;
                 isRepaeted = false;
                 break;
             case R.id.action_picture_brightness:
-                ef = PictureEffectManager.SetBrightness(bitmap, 60);
+                ExecutorService executorBrightness = Executors.newSingleThreadExecutor();
+                Callable<Bitmap> callableBrightness = new Callable<Bitmap>() {
+                    @Override
+                    public Bitmap call() {
+                        isProcessing = true;
+                        Bitmap newEf = PictureEffectManager.SetBrightness(bitmap, 60);
+                        return newEf;
+                    }
+                };
+                Future<Bitmap> futureBrightness = executorBrightness.submit(callableBrightness);
+                try {
+                    ef = futureBrightness.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                isProcessing = false;
                 isRepaeted = false;
                 break;
             case R.id.action_picture_contrast:
-                ef = PictureEffectManager.takeColorContrast(bitmap, 100);
+                ExecutorService executorContrast = Executors.newSingleThreadExecutor();
+                Callable<Bitmap> callableContrast = new Callable<Bitmap>() {
+                    @Override
+                    public Bitmap call() {
+                        isProcessing = true;
+                        Bitmap newEf = PictureEffectManager.takeColorContrast(bitmap, 100);
+                        return newEf;
+                    }
+                };
+                Future<Bitmap> futureContrast = executorContrast.submit(callableContrast);
+                try {
+                    ef = futureContrast.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                isProcessing = false;
                 isRepaeted = false;
                 break;
             case R.id.action_picture_greyscale:
-                ef = PictureEffectManager.grayScaleImage(bitmap);
+                ExecutorService executorGreyscale = Executors.newSingleThreadExecutor();
+                Callable<Bitmap> callableGreyscale = new Callable<Bitmap>() {
+                    @Override
+                    public Bitmap call() {
+                        isProcessing = true;
+                        Bitmap newEf = PictureEffectManager.grayScaleImage(bitmap);
+                        return newEf;
+                    }
+                };
+                Future<Bitmap> futureGreyscale = executorGreyscale.submit(callableGreyscale);
+                try {
+                    ef = futureGreyscale.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                isProcessing = false;
                 isRepaeted = false;
                 break;
             case R.id.action_picture_modification_back:
-                if (isRepaeted) {
-                    isRepaeted = !isRepaeted;
-                    ef = bitmap;
-                } else if (tmpBitmap != null) {
-                    isRepaeted = true;
-                    ef = tmpBitmap;
+                if (!isProcessing) {
+                    if (isRepaeted) {
+                        isRepaeted = !isRepaeted;
+                        ef = bitmap;
+                    } else if (tmpBitmap != null) {
+                        isRepaeted = true;
+                        ef = tmpBitmap;
+                    }
+                } else {
+                    Toast unsavedToast = Toast.makeText(getApplicationContext(),
+                            "Trwa wykonywanie operacji...", Toast.LENGTH_SHORT);
+                    unsavedToast.show();
                 }
                 break;
         }
