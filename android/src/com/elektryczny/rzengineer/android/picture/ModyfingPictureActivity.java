@@ -6,7 +6,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.graphics.Bitmap;
@@ -25,9 +24,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.RunnableFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -285,7 +281,7 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
                     @Override
                     public Bitmap call() {
                         isProcessing = true;
-                        Bitmap newEf = PictureEffectManager.SetBrightness(bitmap, 60);
+                        Bitmap newEf = PictureEffectManager.setBrightness(bitmap, 60);
                         return newEf;
                     }
                 };

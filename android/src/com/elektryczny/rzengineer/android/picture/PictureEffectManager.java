@@ -102,7 +102,7 @@ public class PictureEffectManager {
         return bmOut;
     }
 
-    public static Bitmap SetBrightness(Bitmap src, int value) {
+    public static Bitmap setBrightness(Bitmap src, int value) {
         int width = src.getWidth();
         int height = src.getHeight();
         Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
