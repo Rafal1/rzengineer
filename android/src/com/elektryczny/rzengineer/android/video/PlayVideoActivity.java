@@ -30,8 +30,8 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
     private boolean pausing = false;
     private ImageView drawView;
     private Boolean isStarted = false;
-    private final String STOP_VIDEO = getResources().getString(R.string.pause_video);
-    private final String RESUME_VIDEO = getResources().getString(R.string.resume_video);
+    private String STOP_VIDEO;
+    private String RESUME_VIDEO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,9 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        STOP_VIDEO = getResources().getString(R.string.pause_video);
+        RESUME_VIDEO = getResources().getString(R.string.resume_video);
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -143,13 +146,13 @@ public class PlayVideoActivity extends Activity implements SurfaceHolder.Callbac
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+        return true;
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mediaPlayer.release();
+        super.onDestroy();
     }
 
     @Override
