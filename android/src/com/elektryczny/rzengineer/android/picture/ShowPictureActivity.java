@@ -1,6 +1,8 @@
 package com.elektryczny.rzengineer.android.picture;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,12 +25,17 @@ public class ShowPictureActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_picture);
-
         normalView = (ImageView) findViewById(R.id.picture_activity_image_to_show);
+        normalView.setScaleType(ImageView.ScaleType.FIT_XY);
+
         File file = new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE));
         if (file.exists()) {
-            Uri normalPictureImage = Uri.fromFile(file);
-            normalView.setImageURI(normalPictureImage);
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bmOptions);
+            if (myBitmap.getWidth() > 2048 || myBitmap.getHeight() > 2048) {
+                myBitmap = Bitmap.createScaledBitmap(myBitmap, 2048, 2048, true);
+            }
+            normalView.setImageBitmap(myBitmap);
         }
 
         drawView = (ImageView) findViewById(R.id.picture_activity_image_to_show_layer);

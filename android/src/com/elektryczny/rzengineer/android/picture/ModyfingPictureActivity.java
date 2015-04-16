@@ -56,6 +56,7 @@ public class ModyfingPictureActivity extends Activity implements OnClickListener
         currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
 
         normalView = (ImageView) findViewById(R.id.pictureEditView);
+        normalView.setScaleType(ImageView.ScaleType.FIT_XY);
         normalView.setImageURI(Uri.fromFile(new File(MultimediaFileManager.getPathToFile(FileEnum.IMAGE_FILE))));
 
         smallBrush = getResources().getInteger(R.integer.small_size);
